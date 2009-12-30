@@ -1,0 +1,33 @@
+JAVA_CLASSPATH="java-cup.jar:junit.jar:../lib/JFlex.jar"
+inherit ant emacs vim
+
+HOMEPAGE="http://jflex.de/"
+SRC_URI="http://jflex.de/${P}.tar.gz"
+
+DISTCLEANFILES="src/java_cup/runtime/*"
+
+src_compile() {
+	lndirs
+	cd ${B}/src
+	# bootstrap, then rebuild
+	cygant jar
+	rm -fr ../lib/JFlex/
+	cygant jar
+	cygjavadoc -classpath ${CLASSPATH%:*:}:${ANT_HOME}/lib/ant.jar -d ../doc/api -sourcepath . -subpackages JFlex
+}
+
+src_install() {
+	cd ${B}
+	dojar lib/JFlex.jar
+	java_wrapper jflex JFlex.jar
+
+	docinto html
+	dodoc doc/*.{css,gif,html,png}
+	dojavadoc doc/api
+
+	doemacs lib/*.el
+	emacs_compile
+
+	viminto syntax
+	dovim lib/*.vim
+}
