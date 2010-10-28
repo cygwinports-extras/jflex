@@ -1,5 +1,5 @@
 category: Java
-requires: java-cup
+requires: jamvm java-cup
 sdesc: "Java lexical analyzer generator"
 ldesc: "JFlex is a lexical analyser generator for Javawritten in Java. 
 It is also a rewrite of the very useful tool JLex.  It does not share

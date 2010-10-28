@@ -1,4 +1,4 @@
-JAVA_CLASSPATH="java-cup.jar:junit.jar:../lib/JFlex.jar"
+JAVA_CLASSPATH="java-cup.jar:junit.jar"
 inherit ant emacs vim
 
 HOMEPAGE="http://jflex.de/"
@@ -10,10 +10,10 @@ src_compile() {
 	lndirs
 	cd ${B}/src
 	# bootstrap, then rebuild
-	cygant jar
+	cygant -lib ../lib/JFlex.jar jar
 	rm -fr ../lib/JFlex/
-	cygant jar
-	cygjavadoc -classpath ${CLASSPATH%:*:}:${ANT_HOME}/lib/ant.jar -d ../doc/api -sourcepath . -subpackages JFlex
+	cygant -lib ../lib/JFlex.jar jar
+	cygjavadoc -classpath ${CLASSPATH}:${ANT_HOME}/lib/ant.jar -d ../doc/api -sourcepath . -subpackages JFlex
 }
 
 src_install() {
